@@ -24,3 +24,8 @@ values ('Management'),
        ('Accounting'),
        ('Marketing'),
        ('Human Resources');
+
+
+SELECT * FROM employee;
+SELECT * FROM role;
+SELECT * FROM department;
