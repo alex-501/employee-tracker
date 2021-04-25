@@ -1,3 +1,8 @@
+DROP DATABASE IF EXISTS employee_DB;
+CREATE DATABASE employee_DB;
+USE employee_DB;
+
+
 CREATE TABLE employee (
   id INTEGER PRIMARY KEY,
   first_name VARCHAR(30) NOT NULL,
@@ -10,7 +15,7 @@ CREATE TABLE employee (
 );
 
 
-INSERT INTO employee (first_name, last_name, party_id, industry_connected)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES
   ('Ronald', 'Firbank', 1, 1),
   ('Virginia', 'Woolf', 1, 1),
@@ -28,18 +33,19 @@ VALUES
 
 CREATE TABLE position (
   id INTEGER PRIMARY KEY,
-  title VARCHAR(30) NOT NULL,
-  salary VARCHAR(30) NOT NULL,
-  department VARCHAR(30) NOT NULL
+  Position VARCHAR(30),
+    salary DECIMAL(12,4),
+    department_id INT NOT NULL,
+    PRIMARY Key (id),
+    FOREIGN KEY (department_id) REFERENCES department(id)
 );
-
   
 
 
-  insert into position (title, salary, department) values('Manager', 200000, 1);
- insert into position(title, salary, department) values('Engineer', 220000,2 );
- insert into position(title, salary, department) values('Accountant', 240000, 3);
- insert into position(title, salary, department) values('Administration', 20000, 4);
+  insert into position (position, salary, department) values('Manager', 200000, 1);
+ insert into position(position, salary, department) values('Engineer', 220000,2 );
+ insert into position(position, salary, department) values('Accountant', 240000, 3);
+ insert into position(position, salary, department) values('Administration', 20000, 4);
 
 
 CREATE TABLE department (
