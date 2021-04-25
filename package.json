@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "jest",
-     "migrate": "sqlite3 db/election.db < db/schema.sql",
-    "seed": "sqlite3 db/election.db < db/seeds.sql",
+    "migrate": "sqlite3 db/election.db < db/schema.sql",
+    "seed": "sqlite3 db/schema.sql < db/seeds.sql",
     "db": "sqlite3 db/election.db",
     "start": "node server.js"
   },
@@ -22,7 +22,11 @@
   },
   "homepage": "https://github.com/alex-501/employee-tracker#readme",
   "dependencies": {
+    "console.table": "^0.10.0",
     "express": "^4.17.1",
+    "inquirer": "^8.0.0",
+    "mysql": "^2.18.1",
+    "sql": "^0.78.0",
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {

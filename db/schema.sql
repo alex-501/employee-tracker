@@ -9,7 +9,6 @@ CREATE TABLE employee (
   Last_name VARCHAR(30) NOT NULL,
   role_id INT NOT NULL,
   manager_id INT NOT NULL,
-    PRIMARY KEY (id),
     FOREIGN KEY (role_id) REFERENCES employeerole(id),
     FOREIGN KEY (manager_id) REFERENCES employeerole(id)
 );
@@ -26,7 +25,7 @@ VALUES
   ('Edward', 'Bellamy', 3, 0),
   ('Montague', 'Summers', 3, 1),
   ('Octavia', 'Butler', 3, 1),
-  ('Unica', 'Zurn', NULL, 1);
+  ('Unica', 'Zurn', 3, 1);
 
 
 
@@ -36,16 +35,15 @@ CREATE TABLE position (
   Position VARCHAR(30),
     salary DECIMAL(12,4),
     department_id INT NOT NULL,
-    PRIMARY Key (id),
     FOREIGN KEY (department_id) REFERENCES department(id)
 );
   
 
 
-  insert into position (position, salary, department) values('Manager', 200000, 1);
- insert into position(position, salary, department) values('Engineer', 220000,2 );
- insert into position(position, salary, department) values('Accountant', 240000, 3);
- insert into position(position, salary, department) values('Administration', 20000, 4);
+  insert into position (position, salary, department_id) values('Manager', 200000, 1);
+ insert into position(position, salary, department_id) values('Engineer', 220000,2 );
+ insert into position(position, salary, department_id) values('Accountant', 240000, 3);
+ insert into position(position, salary, department_id) values('Administration', 20000, 4);
 
 
 CREATE TABLE department (
