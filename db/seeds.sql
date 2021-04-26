@@ -1,4 +1,4 @@
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
+INSERT INTO employee (first_name, last_name, Position_id, manager_id)
 VALUES
   ('Ronald', 'Firbank', 1, 1),
   ('Virginia', 'Woolf', 1, 1),
@@ -8,17 +8,15 @@ VALUES
   ('Dora', 'Carrington', 3, 0),
   ('Edward', 'Bellamy', 3, 0),
   ('Montague', 'Summers', 3, 1),
-  ('Octavia', 'Butler', 3, 1),
-  ('Unica', 'Zurn', NULL, 1);
+  ('Octavia', 'Butler', 3, 1));
+
+  insert into position (position, salary, position) values('Manager', 200000, 1);
+ insert into position(position, salary, position_id) values('Engineer', 220000,2 );
+ insert into position(position, salary, position_id) values('Accountant', 240000, 3);
+ insert into position(position, salary, position_id) values('Administration', 20000, 4);
 
 
-  insert into position (position, salary, department) values('Manager', 200000, 1);
- insert into position(position, salary, department) values('Engineer', 220000,2 );
- insert into position(position, salary, department) values('Accountant', 240000, 3);
- insert into position(position, salary, department) values('Administration', 20000, 4);
-
-
-insert into department(name)
+insert into position(name)
 values ('Management'),
        ('Engineering'),
        ('Accounting'),
@@ -27,5 +25,5 @@ values ('Management'),
 
 
 SELECT * FROM employee;
-SELECT * FROM role;
-SELECT * FROM department;
+SELECT * FROM position;
+SELECT * FROM position;
