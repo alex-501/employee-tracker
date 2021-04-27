@@ -1,5 +1,12 @@
 const mysql = require('mysql2');
-const connection = require('./connection');
+const connection = require('./connection.js');
+
+var requireStack = require('require-stack')
+try{
+  requireStack('./server.js')
+}catch(e){
+  console.log(e.stack)
+}
 
 class employee_db {
     constructor(connection) {

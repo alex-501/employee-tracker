@@ -25,7 +25,7 @@ CREATE TABLE departments (
   
 );
 
-CREATE TABLE employeerole (
+CREATE TABLE roles (
     id INTEGER PRIMARY KEY,
     title varchar(30) ,
     salary decimal ,
