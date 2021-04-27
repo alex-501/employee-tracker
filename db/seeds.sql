@@ -1,29 +1,38 @@
-INSERT INTO employee (first_name, last_name, Position_id, manager_id)
+INSERT INTO departments 
+(id, name) --repeat algorithm
+
+VALUES 
+    (  1 , 'Supervisor'),
+    ( 2 , 'HR'),
+    ( 3 , 'accounting'),
+    ( 4 , 'Mental Health');
+
+INSERT INTO employeerole --order matters
+(id, title, salary, department_id)
+
 VALUES
-  ('Ronald', 'Firbank', 1, 1),
-  ('Virginia', 'Woolf', 1, 1),
-  ('Piers', 'Gaveston', 1, 0),
-  ('Charles', 'LeRoi', 2, 1),
-  ('Katherine', 'Mansfield', 2, 1),
-  ('Dora', 'Carrington', 3, 0),
-  ('Edward', 'Bellamy', 3, 0),
-  ('Montague', 'Summers', 3, 1),
-  ('Octavia', 'Butler', 3, 1));
+    (  1, 'Supervisor ', 20000, 1),
+    (  2, 'Assistant to the regional manager', 89900, 1  ),
+    (  3, 'Assistant Regional Manager', 12000, 2  ),
+    (  4, 'Office Pranks', 11000, 2  ),
+     (  5, 'Computer dude', 22000, 3  ),
+    (  6, 'Head doctor', 11000, 4  ),
+    (  7, 'top head doctor', 50000, 4 );
+    --peaky blinders eh
+INSERT INTO  employees   
+(id, first_name, last_name, role_id, manager_id)
 
-  insert into position (position, salary, position) values('Manager', 200000, 1);
- insert into position(position, salary, position_id) values('Engineer', 220000,2 );
- insert into position(position, salary, position_id) values('Accountant', 240000, 3);
- insert into position(position, salary, position_id) values('Administration', 20000, 4);
+VALUES
+    ( 1,"mr", "jones", 7, NULL ),            
+     ( 2, "tommy", "shelby", 1, 1 ),
+    ( 3, "arthur", "shelby", 3, NULL ),   
+    ( 4, "john", "shelby", 4, 3 ),
+    ( 5, "polly", "gray", 2, NULL ),
+    ( 6, "michael", "gray", 5, NULL ),
+    ( 7, "mr ", "solomons", 6, 6 );
 
+  
 
-insert into position(name)
-values ('Management'),
-       ('Engineering'),
-       ('Accounting'),
-       ('Marketing'),
-       ('Human Resources');
-
-
+SELECT * FROM department;
+SELECT * FROM employeerole;
 SELECT * FROM employee;
-SELECT * FROM position;
-SELECT * FROM position;

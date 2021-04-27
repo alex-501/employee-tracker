@@ -1,30 +1,69 @@
-DROP DATABASE IF EXISTS employee_DB;
-CREATE DATABASE employee_DB;
-USE employee_DB;
+DROP DATABASE IF EXISTS employee_db;
+drop table if exists employeerole;
+
+drop table if exists employees;
+drop table if exists departments;
 
 
-CREATE TABLE employee (
-  id INTEGER PRIMARY KEY,
-  first_name VARCHAR(30) NOT NULL,
-  Last_name VARCHAR(30) NOT NULL,
-  Position_id INT NOT NULL,
- 
-    FOREIGN KEY (Position_id) REFERENCES employeePosition(id),
-    REFERENCES employeePosition(id)
-);
 
 
-CREATE TABLE position (
-  id INTEGER PRIMARY KEY,
-  Position VARCHAR(30),
-    salary DECIMAL(12,4),
-    position_id INT NOT NULL,
-    FOREIGN KEY (position_id) REFERENCES position(id)
-);
+CREATE DATABASE employee_db;
+
+
+
+
+USE employee_db;
+
+
+
+
+
+
+CREATE TABLE departments (
+   id INTEGER PRIMARY KEY,
+    name VARCHAR(30) NOT NULL
   
+);
+
+CREATE TABLE employeerole (
+    id INTEGER PRIMARY KEY,
+    title varchar(30) ,
+    salary decimal ,
+    department_id INT,
+
+        CONSTRAINT fk_department 
+        FOREIGN KEY (department_id) 
+        REFERENCES departments(id) 
+        ON UPDATE CASCADE 
+        
+        ON DELETE SET NULL
+
+);
+
+CREATE TABLE employees (
+    id INTEGER PRIMARY KEY,
+    first_name varchar(30) ,
+    last_name varchar(30) ,
+    role_id INT,
+    manager_id INT,
+    CONSTRAINT fk_manager
+      FOREIGN KEY (manager_id)
+    REFERENCES employees(id)
+
+        ON UPDATE CASCADE
+    ON DELETE SET NULL,
+    CONSTRAINT fk_role 
+        FOREIGN KEY (role_id) 
+        REFERENCES employeerole(id)
+
+        ON UPDATE CASCADE 
 
 
+        ON DELETE SET NULL
+);
+
+
+
+SELECT * FROM department;
+SELECT * FROM employeerole;
 SELECT * FROM employee;
-SELECT * FROM position;
-
-SELECT * FROM position;
