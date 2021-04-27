@@ -5,7 +5,7 @@ const cTable = require('console.table');
 const inquirer = require('inquirer');
 var requireStack = require('require-stack')
 try{
-  requireStack('.db/index.js')
+  requireStack('./db/index.js')
 }catch(e){
   console.log(e.stack)
 }
