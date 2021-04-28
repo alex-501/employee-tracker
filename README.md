@@ -16,16 +16,16 @@ THEN I am prompted to enter the name, salary, and department for the role and th
 WHEN I choose to add an employee
 THEN I am prompted to enter the employee’s first name, last name, role, and manager and that employee is added to the database
 
-
+====================================================
 ## instruction
-run the following commands to install proper packages, then run node server in the terminal
-npm i npm-install
-npm i require-stack
-npm i inquirer
-npm i console.table
-npm i my-sql
-npm i mysql2
-
+run the following commands to install proper packages, then run node server in the terminal====
+npm i npm-install====
+npm i require-stack====
+npm i inquirer====
+npm i console.table===
+npm i my-sql===
+npm i mysql2====
+====================================================
 
 ![Screenshot (191)](https://user-images.githubusercontent.com/68447140/116332098-f2be9f80-a785-11eb-8bee-741bfdfea809.png)
 
