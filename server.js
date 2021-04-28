@@ -1,358 +1,157 @@
-const Employee_db = require('.');
+const mysql = require("mysql");
 const {prompt} = require('inquirer');
 const {table} = require('table');
 const cTable = require('console.table');
 const inquirer = require('inquirer');
 var requireStack = require('require-stack')
-try{
-  requireStack('./db/index.js')
-}catch(e){
-  console.log(e.stack)
-}
 
-var requireStack = require('require-stack')
-try{
-  requireStack('./server.js')
-}catch(e){
-  console.log(e.stack)
-}
+// connect/ create to db - remember password
+const  connection = mysql.createConnection({
+    host: 'localhost',
+    port: `3306`,
+    user: 'root',
+    password: '$$Yumaaz1996$$',
+    database: 'employee_db'
+});
 
 
-const startQuestion = [
-    {
-        type: 'list',
-        name: 'startQuestion',
-        message: 'What would you like to do?',
-        choices: ['View Departments',
-            'View Employees',
-            'Add a Department',
-            'Add a Role',
-            'Add an Employee',
-            'Delete a Role',
-            'Delete an Employee',
-            'Exit ']
-    }
-];
-//new dept
-const addDepartmentQuestion = [
-    {
-        type: 'input',
-        name: 'departmentName',
-        message: 'Please enter the new department name:',
-        validate: nameInput => {
-            if (nameInput) {
-              return true;
-            } else {
-              console.log("Please enter a department name");
-              return false;
-            }
-        },
-    }
-]
-    
-//add employee
-addEmployeeQuestions = (ids) => {
-    return prompt(
-        [  {   type: 'input',
-                name: 'firstName',
-                message: 'First name:',
-                validate: nameInput => {
-                    if (nameInput) {
-                      return true;
-                    } else {
-                      console.log("enter  first name:");
-                      return false;  } },},
-                        {   type: 'input',
-                name: 'lastName',
-                message: 'Last name:',
-                validate: nameInput => {
-                    if (nameInput) {
-                      return true;
-                    } else {
-                      console.log("enter  last name:");
-                      return false;
-                    }   }, },
+connection.connect(function (err) {
+    if (err) throw err;
+    mainMenu();
+//how to connect db 
+});
+
+//inquirer prompts
+function mainMenu() {
+    inquirer
+        .prompt({
+            type: "rawlist",
+            name: "action",
+            message: "What would you like to do?",
+            choices: ["View Employees",
+                "View Departments",
+                "View Roles",
+                "Add Department",
+                 "Add Role",
+                "Add Employee",
+               
+            
+                "Exit"
+            ]
+        })
+        //////////////////////////////////////////
+        .then(function (answer) {
+            switch (answer.action) { case "View Employees":
+                    viewEmployee();
+                    break;
 
 
+                case "View Departments":
+                    viewDepartment();
+                    break;
+               
+                case "View Roles":
+                    viewRole();
+                    break;
+
+
+                case "Add Department":
+                    addDepartment();
+                    break;
+
+
+                case "Add Role":
+                    addRole();
+                    break;
+
+
+                case "Add Employee":
+                    addEmployee();
                     
-            { type: 'list',
-                name: 'role',
-                message: ' name employe role :',
-                 choices: ids.employeerole },
-            ] )}
+                    
+                    case "Exit":
+                    connection.end()  }  }) }
+/////////////////////
 
+function viewEmployee() {
 
+    const query = "SELECT * FROM employee"
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+        console.table(res)
+        mainMenu() })}
+//////
+function viewRole() {
 
+    const query = "SELECT * FROM employeerole"
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+        console.table(res)
+        mainMenu()
+    })}
+////////////////////
+function viewDepartment() {
 
-
-//delete dept
-const deleteDepartmentQuestion = (departments) => {
-    return prompt([{
-                type: 'list',
-                name: 'department',
-                message: " choose  department  to delete:",
-                choices: departments
-            }])}
-
-
-
-
-
-
-
-//DELETE ROLE
-const deleteRoleQuestion = (employeerole) => {
-    return prompt(
-        [
-            {
-                type: 'list',
-                name: 'role',
-                message: "choose the role to delete:",
-                choices: employeerole
-            }
-        ]
-    )
-}
-
-
-
-//DELETE EMPLOYEE
-const deleteEmployeeQuestion = (employees) => {
-    return prompt(
-        [
-            {
-                type: 'list',
-                name: 'employee',
-                message: " choose the employee  to delete:",
-                choices: employees
-            }
-        ]
-    )
-}
-
-
-
-//view depts
-const viewDepartments = () => {
-    Employee_db.showDepartments()
-    .then (([data]) => {
-        const departments = data;
-        console.log('\n');
-        console.table(departments);
-        console.log('\n')
-    })
-    .then ( () => {
-        promptUser()
-    })
-}
-
-//view employee function
-const viewEmployees = () => {
-    Employee_db.showEmployeesemployeeroleManagers()
-    .then (([data]) => {
-        const employees = data.map(employee => ({
-            id: employee.id,
-            first_name: employee.first_name,
-            last_name: employee.last_name,
-            department: employee.department,
-            salary: employee.salary,
-        }))
-        console.table(employees)
-      
-    })
-    .then ( () => {
-        promptUser()
-    })
-}
-
-
-
-const addDepartment = () => {
-    return prompt(addDepartmentQuestion)
-    .then((res) => { 
-        Employee_db.addDepartment(res.departmentName)
-        console.log('\n\n Department: ' + `${res.departmentName}` + ' add SUCCESSFUL\n');
-    })
-    .then ( () => {
-        promptUser()
-    })
-};
-
-const addRole = () => {
-    Employee_db.showDepartments()
-    .then (([data]) => {
-        const departments = data;
-        return departments;
-    })
-    .then (departments =>{
-        return addRoleQuestions(departments);
-    })
-    .then(answers => { 
-         Employee_db.addRole(answers.roleName, parseInt(answers.salary), parseInt(answers.department))
-         console.log('\n\nrole: ' + `${answers.roleName}` + ' add SUCCESS \n');
-    })
-    .then ( () => {
-        promptUser()
-    })
-};
-
-const addEmployee = () => {
-    const ids = [];
-    Employee_db.showemployeerole()
-    .then (([data]) => {
-        if (data) {
-            ids.employeerole = data.map(role => ({
-                value: role.id,
-                name: role.title
-            }));
-        }
-        return ids;
+    const query = "SELECT * FROM department"
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+        console.table(res)
+        mainMenu()
     })}
 
-
-const deleteDepartment = () => {
-    Employee_db.showDepartments()
-    .then (([data]) => {
-        let departmentArray = [];
-        if (data) {
-            departmentArray = data.map(department => ({
-                value: department.id,
-                name: department.department
-            }));
-        }
-        return departmentArray;
-    })
-    .then (departments => {
-        return deleteDepartmentQuestion(departments)
-    })
-
-
-
-    .then(answers => { 
-        Employee_db.deleteDepartment(parseInt(answers.department))
-        console.log(' department deleted. ');})
-    .then ( () => {
-        promptUser()
-    })};
+///////////////////////
+function addRole() {
+    var query = "SELECT * FROM department";
+    var department = [];
+    connection.query(query, function (err,res) {
+        if (err) throw err;
+        for (var i = 0; i < res.length; i++) {
+            department.push({name:res[i].name, value:res[i].id})
+        }})
 
 
 
 
-
-
-
-const deleteRole = () => {
-    Employee_db.showemployeerole()
-    .then (([data]) => {
-        let roleArray = [];
-        if (data) {
-            roleArray = data.map(role => ({
-                value: role.id,
-                name: role.title
-            }));
-        }
-        return roleArray; })
-    .then (employeerole => {
-        return deleteRoleQuestion(employeerole)})
-    .then(answers => { 
-        Employee_db.deleteRole(parseInt(answers.role))
-        console.log('The role has been deleted. '); })
-    .then ( () => {
-        promptUser()
-    })};
-
-
-
-
-
-const deleteEmployee = () => {
-    Employee_db.showEmployees()
-    .then (([data]) => {
-        let employeeArray = [];
-        if (data) {
-            employeeArray = data.map(employee => ({
-                value: employee.id,
-                name: employee.first_name + ' ' + employee.last_name
-            }));
-        }
-        return employeeArray;
-    })
-    .then (employees => {
-        return deleteEmployeeQuestion(employees)})
-    .then(answers => { 
-        Employee_db.deleteEmployee(parseInt(answers.employee))
-        console.log(' employee  deleted. '); })
-    .then ( () => {
-        promptUser()
-    })};
-
-
-const promptUser = () => {
-    console.log('\n')
-    return prompt(startQuestion)
-    .then(answer => { 
-        console.clear()
-        if   (`${answer.startQuestion}` === 'View All Departments') {
-            
-
-
-
-
+/////////////secondary prompts
     
-            viewDepartments()
-        } else if (`${answer.startQuestion}` === 'View All employeerole') {
-                viewemployeerole()
+    inquirer .prompt([ {
+        type: "input",
+        name: "title",
+     message: "What Role Would you like to add?",},
+        {
+            type:"input",
+            name: "salary",
+            message: " What is the salary?",},
+        {
+            type: "list",
+            name: "department",
+            message: "What department ID does this belong to?",
+            choices: department },
+       
+    ]).then(function(answer) {
+        var query = "INSERT INTO employeerole SET ?";
+        connection.query(query, {employeerole:answer["title"], department_id:answer["department"], salary:answer["salary"]}, function(err, res){
+            if (err) throw err;
+            console.log("title has been added");
+            mainMenu();
+        })
+    }) 
 
-
-
-                 } else if (`${answer.startQuestion}` === 'View All Employees') {
-            viewEmployees()
-
-
-
-        } else if (`${answer.startQuestion}` === 'Add a Department') {
-            addDepartment()
-
-
-        } else if (`${answer.startQuestion}` === 'Add a Role') {
-            addRole()
-
-
-        } else if (`${answer.startQuestion}` === 'Add an Employee') {
-            addEmployee()
-
-            
-            
-        } else if (`${answer.startQuestion}` === 'Delete  Department') {
-            deleteDepartment()
-
-
-        } else if (`${answer.startQuestion}` === 'Delete employee Role') {
-            deleteRole()
-
-
-        } else if (`${answer.startQuestion}` === 'Delete Employee') {
-            deleteEmployee()
-
-
-            
-        } else if (`${answer.startQuestion}` === 'Exit ') {
-            console.log('\nprogram ended.\n');
-            Employee_db.connection.end();
-            return  } })
-
-
-
-
-
-    .catch(err => {
-        console.log(err);
-    });
-};
-
-const start = () => {
-    console.log('WELCOME TO EMPLOYEE TRACKER!')
-    promptUser()
+}
+///////////////////
+function addDepartment () {
+    inquirer
+    .prompt({
+        type: "input",
+        name: "departments",
+        message: "Name of Dept to be added?",
+    }).then(function(answer) {
+        var query = "INSERT INTO department SET ?";
+        connection.query(query, {name:answer["departments"]}, function (err, res){
+            if (err) throw err;
+            console.log("Succesfully added");
+            mainMenu();
+        })
+    })
 }
 
-start()
