@@ -31,7 +31,6 @@ npm i mysql2====
 
 ![Screenshot (190)](https://user-images.githubusercontent.com/68447140/116332149-0a962380-a786-11eb-9feb-d9666513aefa.png)
 
-![Screenshot (186)](https://user-images.githubusercontent.com/68447140/116332214-30bbc380-a786-11eb-88bc-c38fd693fcdc.png)
 
 
 ![Screenshot (184)](https://user-images.githubusercontent.com/68447140/116332250-4335fd00-a786-11eb-8b03-82f9ea8629d9.png)
